@@ -7,10 +7,6 @@
         "plugin:react/recommended",
         "airbnb",
         "plugin:@typescript-eslint/recommended",
-        // "prettier",
-        // "prettier/prettier",
-        // "prettier/react",
-        // "prettier/@typescript-eslint",
         "plugin:prettier/recommended"
     ],
     "parser": "@typescript-eslint/parser",
@@ -18,7 +14,7 @@
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": 13,
+        "ecmaVersion": 12,
         "sourceType": "module"
     },
     "plugins": [
@@ -30,14 +26,6 @@
         "no-use-before-define": "off",
         "@typescript-eslint/no-use-before-define": [
             "error"
-        ],
-        "react/jsx-filename-extension": [
-            "warn",
-            {
-                "extensions": [
-                    ".tsx"
-                ]
-            }
         ],
         "import/extensions": [
             "error",
@@ -51,12 +39,7 @@
         "@typescript-eslint/no-shadow": [
             "error"
         ],
-        "@typescript-eslint/explicit-function-return-type": [
-            "error",
-            {
-                "allowExpressions": true
-            }
-        ],
+        "@typescript-eslint/explicit-function-return-type": "off",
         "max-len": [
             "warn",
             {
@@ -66,9 +49,23 @@
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
         "import/prefer-default-export": "off",
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-filename-extension": [
+            1,
+            { "extensions": [".js", ".jsx", ".ts", ".tsx"
+                ]
+            }
+        ],
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "react/display-name": "off",
+        "react/jsx-uses-react": "off"
     },
     "settings": {
+        "react": {
+            "version": "detect" 
+        },
         "import/resolver": {
             "typescript": {}
         }
