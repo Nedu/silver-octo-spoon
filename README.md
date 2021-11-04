@@ -73,8 +73,8 @@ From the root of the project
 ```
 $ cd server
 $ yarn install
-$ yarn run seed-db // this should be run only once
 $ yarn run dev
+$ yarn run seed-db // this should be run only once
 ```
 Your server should be running at port 5000
 
