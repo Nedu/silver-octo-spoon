@@ -1,0 +1,44 @@
+version: "3"
+services:
+  client_dev:
+    build: ./client
+    command: sh -c "npm run start"
+    container_name: pc-client-dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client:/home/app/client
+      - /home/app/client/node_modules
+    working_dir: /home/app/client
+  server_dev:
+    build: ./server
+    command: sh -c "yarn run dev"
+    container_name: pc-server-dev
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: theScore
+      DB_HOST: db
+      DB_PORT: 5432
+      DATABASE_URL: postgres://postgres:postgres@db:5432/theScore
+    ports:
+      - 5000:5000
+    volumes:
+      - ./server:/home/app/server
+      - /home/app/server/node_modules
+    working_dir: /home/app/server
+    restart: on-failure
+    depends_on:
+      - db
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=theScore
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - ./db/data/postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432

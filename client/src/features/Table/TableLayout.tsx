@@ -64,6 +64,15 @@ const PaginationButton = styled(Button)`
     margin-right: 1em;
 `
 
+const EmptyTableRow = styled(TableRow)`
+    width: '100%';
+`
+
+const EmptyTableCell = styled(TableCell)`
+    text-align: center !important;
+    font-size: 16px;
+`
+
 export type FetchDataProps = {
     pageIndex: number
     pageSize: number
@@ -103,7 +112,7 @@ const Table: FC<TableProps> = ({
         headerGroups,
         // rows,
         prepareRow,
-        // visibleColumns,
+        visibleColumns,
         page,
         canPreviousPage,
         canNextPage,
@@ -172,75 +181,90 @@ const Table: FC<TableProps> = ({
                     ))}
                 </TableHead>
                 <TableBody {...getTableBodyProps()}>
-                    {page.map((row) => {
-                        prepareRow(row)
-                        return (
-                            <TableRow {...row.getRowProps(getRowProps(row))}>
-                                {row.cells.map((cell) => {
-                                    return (
-                                        <FocusedTableCell
-                                            {...cell.getCellProps([
-                                                getColumnProps(cell.column),
-                                                getCellProps(cell),
-                                            ])}
-                                        >
-                                            {cell.render('Cell')}
-                                        </FocusedTableCell>
-                                    )
-                                })}
-                            </TableRow>
-                        )
-                    })}
+                    {page.length > 0 ? (
+                        page.map((row) => {
+                            prepareRow(row)
+                            return (
+                                <TableRow
+                                    {...row.getRowProps(getRowProps(row))}
+                                >
+                                    {row.cells.map((cell) => {
+                                        return (
+                                            <FocusedTableCell
+                                                {...cell.getCellProps([
+                                                    getColumnProps(cell.column),
+                                                    getCellProps(cell),
+                                                ])}
+                                            >
+                                                {cell.render('Cell')}
+                                            </FocusedTableCell>
+                                        )
+                                    })}
+                                </TableRow>
+                            )
+                        })
+                    ) : (
+                        <EmptyTableRow>
+                            <EmptyTableCell colSpan={visibleColumns.length}>
+                                No data exists
+                            </EmptyTableCell>
+                        </EmptyTableRow>
+                    )}
                 </TableBody>
             </StyledTable>
-            <PaginationWrapper>
-                <PaginationButton
-                    variant="contained"
-                    onClick={() => gotoPage(1)}
-                    disabled={!canPreviousPage}
-                >
-                    {'<<'}
-                </PaginationButton>
-                <PaginationButton
-                    variant="contained"
-                    onClick={() => previousPage()}
-                    disabled={!canPreviousPage}
-                >
-                    {'<'}
-                </PaginationButton>
-                <PaginationContainer>
-                    Page{' '}
-                    <strong> {` ${pageIndex} of ${pageOptions.length}`}</strong>
-                </PaginationContainer>
-                <PaginationContainer>
-                    Go to page:{' '}
-                    <input
-                        type="number"
-                        defaultValue={pageIndex}
-                        onChange={(e) => {
-                            const newPage = e.target.value
-                                ? Number(e.target.value)
-                                : 1
-                            gotoPage(newPage)
-                        }}
-                        style={{ width: '100px' }}
-                    />
-                </PaginationContainer>
-                <PaginationButton
-                    variant="contained"
-                    onClick={() => nextPage()}
-                    disabled={!canNextPage}
-                >
-                    {'>'}
-                </PaginationButton>
-                <PaginationButton
-                    variant="contained"
-                    onClick={() => gotoPage(pageCount)}
-                    disabled={!canNextPage}
-                >
-                    {'>>'}
-                </PaginationButton>
-            </PaginationWrapper>
+            {data.length > 0 && (
+                <PaginationWrapper>
+                    <PaginationButton
+                        variant="contained"
+                        onClick={() => gotoPage(1)}
+                        disabled={!canPreviousPage}
+                    >
+                        {'<<'}
+                    </PaginationButton>
+                    <PaginationButton
+                        variant="contained"
+                        onClick={() => previousPage()}
+                        disabled={!canPreviousPage}
+                    >
+                        {'<'}
+                    </PaginationButton>
+                    <PaginationContainer>
+                        Page{' '}
+                        <strong>
+                            {' '}
+                            {` ${pageIndex} of ${pageOptions.length}`}
+                        </strong>
+                    </PaginationContainer>
+                    <PaginationContainer>
+                        Go to page:{' '}
+                        <input
+                            type="number"
+                            defaultValue={pageIndex}
+                            onChange={(e) => {
+                                const newPage = e.target.value
+                                    ? Number(e.target.value)
+                                    : 1
+                                gotoPage(newPage)
+                            }}
+                            style={{ width: '100px' }}
+                        />
+                    </PaginationContainer>
+                    <PaginationButton
+                        variant="contained"
+                        onClick={() => nextPage()}
+                        disabled={!canNextPage}
+                    >
+                        {'>'}
+                    </PaginationButton>
+                    <PaginationButton
+                        variant="contained"
+                        onClick={() => gotoPage(pageCount)}
+                        disabled={!canNextPage}
+                    >
+                        {'>>'}
+                    </PaginationButton>
+                </PaginationWrapper>
+            )}
         </>
     )
 }

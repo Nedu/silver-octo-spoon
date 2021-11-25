@@ -54,7 +54,7 @@ We will evaluate you on your ability to solve the problem defined in the require
 If you have any questions regarding requirements, do not hesitate to email your contact at theScore for clarification.
 
 ### Requirements
-This application requires postgresql to run locally on your system and a database already created. server/src/database/config/config.json contains the database configurations. You can update to the values you want. The development object would be the object you would be updating.
+This application requires postgresql to run locally on your system and a database already created. server/src/database/config/config.ts contains the database configurations. You can update to the values you want. The development object would be the object you would be updating.
 
 ### Overview
 At a high-level, this application consists of:
@@ -62,30 +62,16 @@ At a high-level, this application consists of:
 - A PostgreSQL database that stores the rushing statistics for players;
 - A backend Node/Express server that provides the rushing stats through a REST API;
 - A frontend React application that renders a table with the rushing statistics data.
+- Docker Compose which is used to run the boilerplate for development, allowing the automatic setup of dev environment and database structure. You would need to ensure that Docker is installed on your system.
 
-### Installing and Running this solution
+### Installing and Running this solution (with Docker)
 - Clone this repo
-- Set up the server
-- Set up the frontend
+- Change the name of `server/.env.sample file` to `server/.env`
+- Run `docker-compose build --no-cache`
+- Run `docker-compose up`
 
-### Server Setup
-From the root of the project
-```
-$ cd server
-$ yarn install
-$ yarn run dev
-$ yarn run seed-db // this should be run only once
-```
 Your server should be running at port 5000
-
-### Client Setup
-From the root of the project
-```
-$ cd client
-$ yarn install
-$ yarn run start
-```
-Your server should be running at port 3000
+Your client should be running at port 3000
 
 ### Improvement to implement given more time
 - Complete integrating caching across the frontend app using react-query

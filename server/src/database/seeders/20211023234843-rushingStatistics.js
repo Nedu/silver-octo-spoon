@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import data from 'src/data/rushing.json'
+import data from '../../data/rushing.json'
 
 export default {
   up: async (queryInterface, Sequelize) => {
